@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider} from 'react-router-dom';
 import LandingPage from "./landingpage.jsx"
-// import RegistrationPage from './register.jsx'
+import RegistrationPage from './register.jsx'
 
 function App() {
 
@@ -9,10 +9,10 @@ function App() {
       path:"/",
       element: <LandingPage/>
     },
-    // {
-    //   path:"/register",
-    //   element: <RegistrationPage/>
-    // }
+    {
+      path:"/register",
+      element: <RegistrationPage/>
+    }
   ])
 
   return (
