@@ -1,12 +1,27 @@
 services:
-  frontend:
-    build:
-      context: ./frontend # Path to your frontend directory
-    ports:
-      - "80:80"           # Expose port 80 for the frontend
-    networks:
-      - app-network
 
-networks:
-  app-network:
-    driver: bridge
+  # For development
+  frontend-dev:
+    build:
+      context: ./frontend
+      target: development  # Use the 'development' stage
+    volumes:
+      - ./frontend/src:/app/src  # Mount local code for live-reloading
+      - /app/node_modules  # Avoid overwriting node_modules
+    ports:
+      - "3000:3000"  # Expose the dev server port (e.g., for Vite)
+    environment:
+      - NODE_ENV=development
+
+  # For production
+#   frontend-prod:
+#     build:
+#       context: ./frontend # Path to your frontend directory
+#     ports:
+#       - "80:80"           # Expose port 80 for the frontend production
+#     networks:
+#       - app-network
+
+# networks:
+#   app-network:
+#     driver: bridge
