@@ -1,0 +1,12 @@
+services:
+  frontend:
+    build:
+      context: ./frontend # Path to your frontend directory
+    ports:
+      - "80:80"           # Expose port 80 for the frontend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

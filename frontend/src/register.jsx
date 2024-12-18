@@ -397,7 +397,7 @@ const RegistrationPage = () => {
                 <div className="w-full flex flex-row gap-3 justify-end items-end absolute bottom-0">
                     
                     <Link to='/'>
-                        <Button color="default">
+                        <Button color="danger" variant="flat">
                             Cancel
                         </Button>
                     </Link>

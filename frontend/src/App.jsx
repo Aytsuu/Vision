@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider} from 'react-router-dom';
-import LandingPage from "./landingPage"
-import RegistrationPage from './register'
+import LandingPage from "./landingpage.jsx"
+import RegistrationPage from './register.jsx'
 
 function App() {
 
