@@ -1,12 +1,21 @@
 import {useEffect, useState} from "react";
 import {Form, Input, Button, DatePicker, Select, SelectItem} from "@nextui-org/react";
 import { Link } from "react-router-dom";
+import Capture from "./capture";
+import { use } from "react";
 
 
 const RegistrationPage = () => {
     const [data, setAction] = useState(null);
+    const [isSubmit, setIsSubmit] = useState(false);
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let data = Object.fromEntries(new FormData(e.currentTarget));
+        setAction(data);
+        setIsSubmit(true);
 
-    console.log(data && data)
+    }
 
     const container = 
 
@@ -16,12 +25,7 @@ const RegistrationPage = () => {
             <Form
             className="w-full h-full flex flex-col gap-4 relative"
             validationBehavior="native"
-            onSubmit={(e) => {
-                e.preventDefault();
-                let data = Object.fromEntries(new FormData(e.currentTarget));
-
-                setAction(data);
-            }}
+            onSubmit={handleSubmit}
             >   
                 
                 {/* Personal Information */}
@@ -36,7 +40,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="First Name"
                             labelPlacement="inside"
-                            name="firstname"
+                            name="fname"
                             placeholder="Enter your first name"
                             type="text"
                         />
@@ -46,7 +50,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Last Name"
                             labelPlacement="inside"
-                            name="lastname"
+                            name="lname"
                             placeholder="Enter your last name"
                             type="text"
                         />
@@ -56,7 +60,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Middle Name"
                             labelPlacement="inside"
-                            name="middlename"
+                            name="mname"
                             placeholder="Enter your middle name"
                             type="text"
                         />
@@ -102,7 +106,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Citizenship"
                             labelPlacement="inside"
-                            name="citizenship"
+                            name="citizen"
                             placeholder="Enter your citizenship"
                             type="text"
                         />
@@ -218,7 +222,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="First Name"
                             labelPlacement="inside"
-                            name="fFirstname"
+                            name="Ffname"
                             placeholder="Enter first name"
                             type="text"
                         />
@@ -228,7 +232,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Last Name"
                             labelPlacement="inside"
-                            name="fLastname"
+                            name="Flname"
                             placeholder="Enter last name"
                             type="text"
                         />
@@ -238,7 +242,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Middle Name"
                             labelPlacement="inside"
-                            name="fMiddlename"
+                            name="Fmname"
                             placeholder="Enter middle name"
                             type="text"
                         />
@@ -248,7 +252,7 @@ const RegistrationPage = () => {
                             className="max-w-[150px]" 
                             labelPlacement="inside"
                             label="Birth Date" 
-                            name="fDob"
+                            name="Fdob"
                         />
                     </div>
 
@@ -259,7 +263,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Place of Birth"
                             labelPlacement="inside"
-                            name="fPob"
+                            name="Fpob"
                             placeholder="Enter place of birth"
                             type="text"
                         />
@@ -269,7 +273,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Citizenship"
                             labelPlacement="inside"
-                            name="fCitizenship"
+                            name="Fcitizen"
                             placeholder="Enter citizenship"
                             type="text"
                         />
@@ -280,7 +284,7 @@ const RegistrationPage = () => {
                             errorMessage="Please enter a valid number"
                             label="Contact"
                             labelPlacement="inside"
-                            name="fContact"
+                            name="Fcontact"
                             placeholder="Enter contact"
                             type="number"
                         />
@@ -291,7 +295,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Occupation"
                             labelPlacement="inside"
-                            name="fOccupation"
+                            name="Foccupation"
                             placeholder="Enter occupation"
                             type="text"
                         />  
@@ -312,7 +316,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="First Name"
                             labelPlacement="inside"
-                            name="mFirstname"
+                            name="Mfname"
                             placeholder="Enter first name"
                             type="text"
                         />
@@ -322,7 +326,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Last Name"
                             labelPlacement="inside"
-                            name="mLastname"
+                            name="Mlname"
                             placeholder="Enter last name"
                             type="text"
                         />
@@ -332,7 +336,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Middle Name"
                             labelPlacement="inside"
-                            name="mMiddlename"
+                            name="Mmname"
                             placeholder="Enter middle name"
                             type="text"
                         />
@@ -342,7 +346,7 @@ const RegistrationPage = () => {
                             className="max-w-[150px]" 
                             labelPlacement="inside"
                             label="Birth Date" 
-                            name="mDob"
+                            name="Mdob"
                         />
                     </div>
 
@@ -353,7 +357,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Place of Birth"
                             labelPlacement="inside"
-                            name="mPob"
+                            name="Mpob"
                             placeholder="Enter place of birth"
                             type="text"
                         />
@@ -363,7 +367,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Citizenship"
                             labelPlacement="inside"
-                            name="mCitizenship"
+                            name="Mcitizen"
                             placeholder="Enter citizenship"
                             type="text"
                         />
@@ -374,7 +378,7 @@ const RegistrationPage = () => {
                             errorMessage="Please enter a valid number"
                             label="Contact"
                             labelPlacement="inside"
-                            name="mContact"
+                            name="Mcontact"
                             placeholder="Enter contact"
                             type="number"
                         />
@@ -385,7 +389,7 @@ const RegistrationPage = () => {
                             errorMessage="Please fill out this field"
                             label="Occupation"
                             labelPlacement="inside"
-                            name="mOccupation"
+                            name="Moccupation"
                             placeholder="Enter occupation"
                             type="text"
                         />
@@ -401,9 +405,11 @@ const RegistrationPage = () => {
                             Cancel
                         </Button>
                     </Link>
-                    <Button color="primary" type="submit">
-                        Register
-                    </Button>
+                    <Link to='/capture'>
+                        <Button color="primary" type="submit">
+                            Register
+                        </Button>
+                    </Link>
                 </div>
 
             </Form>
@@ -411,8 +417,9 @@ const RegistrationPage = () => {
     </div>
 
 
-    return (
-        container
+    return (<>
+        { isSubmit ? <Capture data={data}/> : container }
+    </>
     );
 }
 

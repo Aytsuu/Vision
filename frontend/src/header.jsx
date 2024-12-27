@@ -19,7 +19,7 @@ const Header = () => {
     <Navbar shouldHideOnScroll>
       <NavbarBrand>
         <AcmeLogo />
-        <p className="font-bold text-inherit">PHINGR</p>
+        <p className="font-bold text-inherit">VISION</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
       </NavbarContent>
