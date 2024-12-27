@@ -2,18 +2,8 @@ import {useCallback, useRef, useState} from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Webcam from 'react-webcam';
 import { Button } from '@nextui-org/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { GrPowerReset } from "react-icons/gr";
-
-const getProfile = async () => {
-    const response = await fetch('http://localhost:4000/api/profile');
-    if(!response.ok){
-        throw new Error('Faild to fetch data');
-    }
-
-    const data = await response.json();
-    return data;
-}
 
 const createProfile = async ({data, capturedImage}) => {
     await fetch('http://localhost:4000/api/profile', {
@@ -25,11 +15,13 @@ const createProfile = async ({data, capturedImage}) => {
     })
 }
 
-const Capture = ({data}) => {
+const Capture = () => {
 
     const webcamRef = useRef(null);
     const [capturedImage, setCapturedImage] = useState(null);
     const queryClient = useQueryClient();
+    const location = useLocation();
+    const { data } = location.state || {};
 
     const handleCapture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();

@@ -14,7 +14,7 @@ export const AcmeLogo = () => {
   );
 };
 
-const Header = () => {
+const Header = ({section}) => {
   return (
     <Navbar shouldHideOnScroll>
       <NavbarBrand>
@@ -24,16 +24,29 @@ const Header = () => {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
       </NavbarContent>
       <NavbarContent justify="end">
+        {section =='profile' ?
+        <>
+          <NavbarItem>
+            <Link to='/'>
+              <Button color="primary" variant="flat">
+                Sign Out
+              </Button>
+            </Link>
+          </NavbarItem>
+        </> : 
+        <>
         <NavbarItem className="hidden lg:flex">
           <Link to='/register'>Register</Link>
         </NavbarItem>
         <NavbarItem>
-          <Link to='/scan'>
-            <Button color="primary" variant="flat">
-              Scan
-            </Button>
-          </Link>
-        </NavbarItem>
+            <Link to='/scan'>
+              <Button color="primary" variant="flat">
+                Scan
+              </Button>
+            </Link>
+          </NavbarItem>
+        </>
+        }
       </NavbarContent>
     </Navbar>
   );

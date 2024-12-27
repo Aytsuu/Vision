@@ -4,6 +4,7 @@ import RegistrationPage from './register.jsx'
 import Capture from './capture.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Scan from './scan.jsx';
+import { Information } from './information.jsx';
 
 const queryClient = new QueryClient();
 
@@ -19,8 +20,16 @@ function App() {
       element: <RegistrationPage/>
     },
     {
+      path:"/capture",
+      element: <Capture/>
+    },
+    {
       path:"/scan",
       element: <Scan/>
+    },
+    {
+      path:"/profile",
+      element: <Information/>
     }
   ])
 

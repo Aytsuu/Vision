@@ -1,19 +1,19 @@
 import {useEffect, useState} from "react";
 import {Form, Input, Button, DatePicker, Select, SelectItem} from "@nextui-org/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Capture from "./capture";
-import { use } from "react";
 
 
 const RegistrationPage = () => {
     const [data, setAction] = useState(null);
     const [isSubmit, setIsSubmit] = useState(false);
+    const navigate = useNavigate();
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        let data = Object.fromEntries(new FormData(e.currentTarget));
-        setAction(data);
-        setIsSubmit(true);
+        let info = Object.fromEntries(new FormData(e.currentTarget));
+        setAction(info);
+        navigate('/capture', {state : {data : info}})
 
     }
 
@@ -418,7 +418,7 @@ const RegistrationPage = () => {
 
 
     return (<>
-        { isSubmit ? <Capture data={data}/> : container }
+        {container }
     </>
     );
 }

@@ -60,16 +60,6 @@ const schema = new mongoose.Schema({
 
 const dataModel = mongoose.model('Profile', schema, 'profile');
 
-// GET Route to retrieve data from MongoDB
-app.get('/api/profile', async (req, res) => {
-    try {
-      const data = await dataModel.find();  // Fetch all records from MongoDB
-      res.status(200).json(data);  // Respond with the data
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  });
-
 // POST route for uploading image and metadata
 app.post('/api/profile', async (req, res) => {
     console.log(req.body.capturedImage)
