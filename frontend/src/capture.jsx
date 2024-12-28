@@ -1,8 +1,8 @@
 import {useCallback, useRef, useState} from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Webcam from 'react-webcam';
 import { Button } from '@nextui-org/react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { GrPowerReset } from "react-icons/gr";
 import {Alert} from "@nextui-org/react";
 
@@ -24,7 +24,6 @@ const Capture = () => {
     const queryClient = useQueryClient();
     const location = useLocation();
     const { data } = location.state || {};
-    const navigate = useNavigate();
 
     const handleCapture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();

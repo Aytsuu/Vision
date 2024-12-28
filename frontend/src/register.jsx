@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {Form, Input, Button, DatePicker, Select, SelectItem} from "@nextui-org/react";
 import { Link, useNavigate } from "react-router-dom";
-import Capture from "./capture";
 
 
 const RegistrationPage = () => {

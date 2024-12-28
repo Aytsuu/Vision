@@ -1,6 +1,5 @@
-import {useEffect, useState} from "react";
-import {Form, Input, Button, DatePicker, Select, SelectItem} from "@nextui-org/react";
-import { Link, useLocation} from "react-router-dom";
+import {Form, Input} from "@nextui-org/react";
+import { useLocation} from "react-router-dom";
 import Header from "./header"
 
 export const Information = () => {
