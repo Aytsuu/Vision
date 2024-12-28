@@ -46,7 +46,7 @@ const Scan = () => {
         }
     }, [capturedImage, found]);
 
-    const camera = <div className='w-full h-[100vh] p-10 flex flex-col items-center gap-10 bg-[#ECF8FF]'>
+    const camera = <div className='w-full h-[100vh] p-10 flex flex-col items-center gap-3 bg-[#ECF8FF]'>
 
         {personalInfo == null && 
             <div className='w-[56rem] h-[5rem] absolute'>
@@ -65,7 +65,7 @@ const Scan = () => {
                 />
             </div>
         }
-    
+
         <Webcam
             className='mt-[8rem]'
             audio={false}
@@ -74,6 +74,8 @@ const Scan = () => {
             width='50%'
             mirrored={true}
         />  
+
+        <h1 className='text-[20px]'>Scanning...</h1>
     </div>
     return (<>
         {camera}
