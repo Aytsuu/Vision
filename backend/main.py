@@ -21,7 +21,7 @@ Payload.max_decode_packets = 500
 executor = ThreadPoolExecutor(max_workers=4)
 
 # Resize image function to reduce processing time
-def resize_image(image, width=640, height=480):
+def resize_image(image, width=200, height=200):
     return cv2.resize(image, (width, height))
 
 def decode_image(data):
@@ -40,7 +40,7 @@ def compare_face(data):
     response = None
 
     # Decode Base64 Image
-    base64_image = data
+    base64_image = data 
     unknown = face_recognition.face_encodings(decode_image(base64_image))
 
     for profile in profiles:
