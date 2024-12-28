@@ -1,7 +1,6 @@
 import {useRef, useState, useCallback, useEffect} from 'react'
 import Webcam from "react-webcam"
 import io from 'socket.io-client';
-import { Information } from './information';
 import {Alert, Button} from "@nextui-org/react";
 import { Link, useNavigate } from 'react-router-dom';
 
