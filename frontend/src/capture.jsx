@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { GrPowerReset } from "react-icons/gr";
 import {Alert} from "@nextui-org/react";
 
+// Send POST request to server
 const createProfile = async ({data, capturedImage}) => {
     await fetch('http://localhost:4000/api/profile', {
         method: 'POST',
