@@ -8,7 +8,7 @@ import face_recognition
 from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO
-from concurrent.futures import ThreadPoolExecutor
+from eventlet import GreenPool
 from engineio.payload import Payload
 from db import db_connect
 import json
@@ -18,11 +18,18 @@ CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
 socket_io = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 Payload.max_decode_packets = 500
 
-executor = ThreadPoolExecutor(max_workers=4)
+green_pool = GreenPool()
 
 # Resize image function to reduce processing time
-def resize_image(image, width=200, height=200):
+def resize_image(image, width=512, height=512):
     return cv2.resize(image, (width, height))
+
+# NEED FIXING
+# NEED FIXING
+# NEED FIXING
+# NEED FIXING
+# NEED FIXING
+# NEED FIXING
 
 def decode_image(data):
     # Decode the Base64 string to image bytes
@@ -54,11 +61,12 @@ def compare_face(data):
             socket_io.emit('receive_from_flask', response)
             break
             
-    
+    socket_io.emit('receive_from_flask', response)
+    print(response)
 
 @socket_io.on('send_to_flask')
 def handle_send_to_flask(data):
-    executor.submit(compare_face, data)
+    green_pool.spawn(compare_face, data)
 
 if __name__ == '__main__':
     socket_io.run(app, debug=True, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True)

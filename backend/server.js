@@ -12,7 +12,6 @@ app.use(bodyParser.json({ limit: '10mb' }))
 
 // MongoDB URI
 const mongoURI = 'mongodb://localhost:27017/VisionDB';
-let gfs;
 
 // Connect to MongoDB
 mongoose.connect(mongoURI)
