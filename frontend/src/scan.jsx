@@ -22,7 +22,8 @@ const Scan = () => {
         socket.on('receive_from_flask', (response) => {
             setPersonalInfo(response);
             if(response){
-                setFound(true)
+                setFound(true);
+                setCapturedImage(null)
                 navigate('/profile', { state : {data: response}});
             }
         });
@@ -35,7 +36,7 @@ const Scan = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             handleCapture();
-        }, 500);
+        }, 3000);
 
         return () => clearInterval(interval); // Cleanup interval on unmount
     }, [handleCapture]);
@@ -45,6 +46,17 @@ const Scan = () => {
             socket.emit('send_to_flask', capturedImage);
         }
     }, [capturedImage, found]);
+
+    // Cleanup socket connection and webcam when the component is unmounted
+    useEffect(() => {
+        if(found){
+            console.log(found)
+            return () => {
+                // Disconnect the socket when the component is unmounted or user navigates away
+                socket.disconnect();
+            };
+        }
+    }, [found]);
 
     const camera = <div className='w-full h-[100vh] p-10 flex flex-col items-center gap-3 bg-[#ECF8FF]'>
 

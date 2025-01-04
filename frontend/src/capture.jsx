@@ -29,7 +29,6 @@ const Capture = () => {
     const handleCapture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setCapturedImage(imageSrc);
-
     }, [webcamRef]);
 
     const createMutation = useMutation({
@@ -45,7 +44,7 @@ const Capture = () => {
         setIsRegistered(true);
     }
  
-    const container = <div className='w-full h-[100vh] p-10 flex flex-col items-center bg-[#ECF8FF] gap-[2rem]'>
+    const container = <div className='w-full h-[100vh] p-10 flex flex-col items-center bg-[#e1e5e7] gap-[2rem]'>
         {isRegistered ? <div className='w-[50rem] h-[5rem] absolute'>
             <Alert
             color="success"
