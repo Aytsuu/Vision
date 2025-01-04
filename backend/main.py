@@ -9,7 +9,6 @@ from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from concurrent.futures import ThreadPoolExecutor
-from engineio.payload import Payload
 from db import db_connect
 import json
 from threading import Lock
@@ -17,7 +16,6 @@ from threading import Lock
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
 socket_io = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
-Payload.max_decode_packets = 500
 
 executor = ThreadPoolExecutor(max_workers=10)
 lock = Lock()
@@ -40,7 +38,7 @@ def compare_face(data):
     unknown = face_recognition.face_encodings(decode_image(base64_image))
     
     if not unknown:
-        return  # Return if no faces are found in the unknown image
+        return  # Return if no faces are found
 
     with lock:
         for profile in profiles:
@@ -65,12 +63,14 @@ def compare_face(data):
                 response = json.dumps(profile, default=str)
                 socket_io.emit('receive_from_flask', response)
                 break
-
+    
     if response is None:
         socket_io.emit('receive_from_flask', response)
 
 @socket_io.on('send_to_flask')
 def handle_send_to_flask(data):
+
+    # Call function and passing data using ThreadPoolExecutor
     executor.submit(compare_face, data)
 
 if __name__ == '__main__':
