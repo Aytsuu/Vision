@@ -4,7 +4,6 @@ eventlet.monkey_patch()
 import base64
 import cv2
 import numpy as np
-import face_recognition
 from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO
@@ -12,6 +11,8 @@ from concurrent.futures import ThreadPoolExecutor
 from db import db_connect
 import json
 from threading import Lock
+import torch
+from facenet_pytorch import MTCNN, InceptionResnetV1
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
@@ -20,50 +21,65 @@ socket_io = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 executor = ThreadPoolExecutor(max_workers=10)
 lock = Lock()
 
-def decode_image(data):
-    # Decode the Base64 string to image bytes
-    image_data = base64.b64decode(data.split(',')[1])  # Split in case of data URI scheme
-    np_image = np.frombuffer(image_data, dtype=np.uint8)
-    image = cv2.imdecode(np_image, cv2.IMREAD_COLOR)
-    return image
+# Initialize FaceNet
+mtcnn = MTCNN(keep_all=True, thresholds=[0.6, 0.7, 0.8])
+resnet = InceptionResnetV1(pretrained='vggface2').eval()
 
+def decode_image(data):
+    try:
+        # Decode the Base64 string to image bytes
+        image_data = base64.b64decode(data.split(',')[1])  # Split in case of data URI scheme
+        np_image = np.frombuffer(image_data, dtype=np.uint8)
+        image = cv2.imdecode(np_image, cv2.IMREAD_COLOR) 
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert to RGB
+
+        return image
+    except Exception as e:
+        print("Error decoding image:", e)
+        return None
+
+def get_face_embedding(image):
+    try:
+        faces = mtcnn(image)
+        if faces is not None:
+            # Get first face embedding
+            # Ensure the tensor has the correct shape [1, 3, height, width] (batch size of 1)
+            face_tensor = faces[0]  # Get the first face from MTCNN
+            face_tensor = face_tensor.unsqueeze(0)  # Add batch dimension: [1, 3, height, width]
+            embedding = resnet(face_tensor)  # Pass through InceptionResnetV1
+            return embedding
+        return None
+    except Exception as e:
+        print("Error getting face embedding:", e)
+        return None 
 
 def compare_face(data):
+    
     collection = db_connect()
     profiles = collection.find()
     response = None
 
     # Decode Base64 Image
     base64_image = data  
-    unknown = face_recognition.face_encodings(decode_image(base64_image))
-    
-    if not unknown:
-        return  # Return if no faces are found
+    unknown = get_face_embedding(decode_image(base64_image))
+
+    if unknown is None:
+        print('No face found')
+        return
 
     with lock:
         for profile in profiles:
             print("Matching with profile...")
-            existing = face_recognition.face_encodings(decode_image(profile['image']))
+            existing = get_face_embedding(decode_image(profile['image']))
+            matches = torch.nn.functional.cosine_similarity(unknown, existing).item()
+            print(matches)
 
-            if not existing:
-                continue  # Skip this profile if no faces are found
-
-            # Compare using compare_faces
-            matches = face_recognition.compare_faces(existing, unknown[0])
-
-            # If no match, calculate the face distance for more detailed comparison
-            if not any(matches):
-                distances = face_recognition.face_distance(existing, unknown[0])
-                closest_match_index = np.argmin(distances)
-                if distances[closest_match_index] < 0.5:  # Use an appropriate threshold
-                    matches[closest_match_index] = True
-
-            # If a match is found, send the response and break out of the loop
-            if any(matches):
+            if matches > 0.7:
+                print("Matched Found: ", profile['_id'])
                 response = json.dumps(profile, default=str)
                 socket_io.emit('receive_from_flask', response)
                 break
-    
+
     if response is None:
         socket_io.emit('receive_from_flask', response)
 

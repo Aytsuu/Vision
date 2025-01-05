@@ -1,5 +1,27 @@
 services:
 
+  backend-dev:
+    build: 
+      context: ./backend
+    container_name: python-flask-app
+    ports:
+      - "5000:5000"  # Expose Flask app on port 5000
+    volumes:
+      - .:/app  # Mount the current directory to /app inside the container
+    environment:
+      - FLASK_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/VisionDB  # Pointing to the MongoDB service
+    depends_on:
+      - mongo-db  # Wait for the MongoDB service to start first
+
+  mongo-db:
+    image: mongo:latest
+    container_name: mongodb
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+
   # For development
   frontend-dev:
     build:
@@ -26,3 +48,6 @@ services:
 # networks:
 #   app-network:
 #     driver: bridge
+
+volumes:
+  mongodb_data:
