@@ -43,7 +43,6 @@ def get_face_embedding(image):
         faces = mtcnn(image)
         if faces is not None:
             # Get first face embedding
-            # Ensure the tensor has the correct shape [1, 3, height, width] (batch size of 1)
             face_tensor = faces[0]  # Get the first face from MTCNN
             face_tensor = face_tensor.unsqueeze(0)  # Add batch dimension: [1, 3, height, width]
             embedding = resnet(face_tensor)  # Pass through InceptionResnetV1
