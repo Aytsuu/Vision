@@ -36,7 +36,7 @@ const Scan = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             handleCapture();
-        }, 3000);
+        }, 4000);
 
         return () => clearInterval(interval); // Cleanup interval on unmount
     }, [handleCapture]);
@@ -49,7 +49,7 @@ const Scan = () => {
 
     // Cleanup socket connection and webcam when the component is unmounted
     useEffect(() => {
-        if(found){
+        if(found || personalInfo == null){
             console.log(found)
             return () => {
                 // Disconnect the socket when the component is unmounted or user navigates away
