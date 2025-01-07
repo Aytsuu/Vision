@@ -63,6 +63,10 @@ def compare_faces(data):
     profiles = collection.find() # Fetch all data in the collection
     response = None
 
+    if profiles is None:
+        socket.emit('receive_from_flask', response)
+        return
+
     # Get the face embedding of the scanned image
     imageBase64 = data
     unknown = face_embedding(decode_image(imageBase64))

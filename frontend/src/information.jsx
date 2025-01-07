@@ -137,7 +137,7 @@ export const Information = () => {
                                 className="max-w-[100px]"
                                 isRequired
                                 errorMessage="Please fill out this field"
-                                label="Weight"
+                                label="Weight (kg)"
                                 labelPlacement="inside"
                                 name="weight"
                                 value={profile.weight}
@@ -154,7 +154,7 @@ export const Information = () => {
                                 className="max-w-[100px]"
                                 isRequired
                                 errorMessage="Please enter a valid number"
-                                label="Height"
+                                label="Height (cm)"
                                 labelPlacement="inside"
                                 name="height"
                                 value={profile.height}

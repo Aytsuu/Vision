@@ -139,7 +139,7 @@ const RegistrationPage = () => {
                             className="max-w-[160px]"
                             isRequired
                             errorMessage="Please fill out this field"
-                            label="Weight"
+                            label="Weight (kg)"
                             labelPlacement="inside"
                             name="weight"
                             placeholder="Enter your weight"
@@ -155,7 +155,7 @@ const RegistrationPage = () => {
                             className="max-w-[160px]"
                             isRequired
                             errorMessage="Please enter a valid number"
-                            label="Height"
+                            label="Height (cm)"
                             labelPlacement="inside"
                             name="height"
                             placeholder="Enter your height"
