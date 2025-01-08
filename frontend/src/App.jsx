@@ -10,6 +10,7 @@ const queryClient = new QueryClient();
 
 function App() {
 
+  // Create route
   const router = createBrowserRouter([
     {
       path:"/",

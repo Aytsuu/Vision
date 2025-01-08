@@ -31,6 +31,7 @@ const Capture = () => {
         setCapturedImage(imageSrc);
     }, [webcamRef]);
 
+    // Pass request
     const createMutation = useMutation({
         mutationFn: createProfile, 
         onSettled: () => {
@@ -39,11 +40,13 @@ const Capture = () => {
         }
     })
 
+    // Execute on event
     const handleCreateProfile = () => {
         createMutation.mutate({data, capturedImage});
         setIsRegistered(true);
     }
- 
+    
+    // Display
     const container = <div className='w-full h-[100vh] p-10 flex flex-col items-center bg-[#e1e5e7] gap-[2rem]'>
         {isRegistered ? <div className='w-[50rem] h-[5rem] absolute'>
             <Alert
